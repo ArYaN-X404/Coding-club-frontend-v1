@@ -1,6 +1,5 @@
 import { Link } from 'react-router';
 import { Mail, Phone, MapPin, ArrowUp, ArrowUpRight } from 'lucide-react';
-import SocialLink from '@/components/shared/SocialLink';
 import { getSocialLinks } from '@/data/socialLinks';
 import styles from './Footer.module.css';
 
@@ -15,6 +14,8 @@ export default function Footer({ contactInfo }) {
 
   const emailAddress = contactInfo?.email || 'codingclub@satiengg.in';
   const phoneNumber = contactInfo?.phone;
+  const discordUrl = contactInfo?.discord?.url || 'https://discord.gg/codingclub-sati';
+  const githubUrl = contactInfo?.github?.url || 'https://github.com/CodingClub-SATI';
 
   return (
     <footer className={styles.footer}>
@@ -43,19 +44,18 @@ export default function Footer({ contactInfo }) {
             </div>
           </div>
 
-          {contactInfo?.discord?.url && (
-            <div className={styles.topRight}>
-              <a 
-                href={contactInfo.discord.url} 
-                target="_blank" 
-                rel="noreferrer" 
-                className={styles.discordPill}
-              >
-                <span>Join Discord</span>
-                <ArrowUpRight size={13} />
-              </a>
-            </div>
-          )}
+          <div className={styles.topRight}>
+            <a 
+              href={discordUrl} 
+              target="_blank" 
+              rel="noreferrer" 
+              className={styles.discordPill}
+              title="Join our Discord community"
+            >
+              <span>Join Discord</span>
+              <ArrowUpRight size={13} />
+            </a>
+          </div>
         </div>
 
         <div className={styles.divider} />
@@ -72,15 +72,25 @@ export default function Footer({ contactInfo }) {
               The official technical club of SATI Vidisha. We build open-source software, host hackathons, and run peer-led workshops to empower student developers.
             </p>
 
-            {socialLinks.length > 0 && (
+            <div className={styles.socialSection}>
+              <span className={styles.socialHeading}>Connect With Us</span>
               <div className={styles.socialRow}>
                 {socialLinks.map((link) => (
-                  <SocialLink key={link.label} href={link.href} label={link.label}>
-                    {link.icon}
-                  </SocialLink>
+                  <a
+                    key={link.label}
+                    href={link.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    className={`${styles.socialBtn} ${styles[`social_${link.key}`] || ''}`}
+                    aria-label={link.label}
+                    title={link.label}
+                  >
+                    <span className={styles.socialIconBox}>{link.icon}</span>
+                    <span className={styles.socialTooltip}>{link.label}</span>
+                  </a>
                 ))}
               </div>
-            )}
+            </div>
           </div>
 
           {/* Col 2: Navigation */}
@@ -119,18 +129,18 @@ export default function Footer({ contactInfo }) {
                   </Link>
                 </li>
               ))}
-              {contactInfo?.github?.url && (
+              {githubUrl && (
                 <li>
-                  <a href={contactInfo.github.url} target="_blank" rel="noreferrer" className={styles.footerLink}>
+                  <a href={githubUrl} target="_blank" rel="noreferrer" className={styles.footerLink}>
                     <span className={styles.linkDash}>–</span>
                     <span>GitHub Repos</span>
                     <ArrowUpRight size={11} className={styles.externalIcon} />
                   </a>
                 </li>
               )}
-              {contactInfo?.discord?.url && (
+              {discordUrl && (
                 <li>
-                  <a href={contactInfo.discord.url} target="_blank" rel="noreferrer" className={styles.footerLink}>
+                  <a href={discordUrl} target="_blank" rel="noreferrer" className={styles.footerLink}>
                     <span className={styles.linkDash}>–</span>
                     <span>Discord Server</span>
                     <ArrowUpRight size={11} className={styles.externalIcon} />

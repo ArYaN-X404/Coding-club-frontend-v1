@@ -146,31 +146,6 @@ export default function Contact() {
                   </button>
                 </div>
 
-                {/* Discord Card */}
-                {contactInfo?.discord?.url && (
-                  <a
-                    href={contactInfo.discord.url}
-                    target="_blank"
-                    rel="noreferrer"
-                    className={`${styles.channelCard} ${styles.discordCard}`}
-                  >
-                    <div className={styles.cardHeader}>
-                      <div className={`${styles.channelIcon} ${styles.discordIcon}`}>
-                        <MessageSquare size={18} />
-                      </div>
-                      <span className={`${styles.channelBadge} ${styles.discordBadge}`}>Active Community</span>
-                    </div>
-
-                    <div className={styles.channelDetails}>
-                      <span className={styles.channelLink}>
-                        <span>Join Club Discord Server</span>
-                        <ArrowUpRight size={14} className={styles.arrowIcon} />
-                      </span>
-                      <span className={styles.cardSub}>Chat with fellow members, ask questions, and share projects.</span>
-                    </div>
-                  </a>
-                )}
-
                 {/* Campus Base Card */}
                 <div className={`${styles.channelCard} ${styles.campusCard}`}>
                   <div className={styles.cardHeader}>
@@ -212,29 +187,42 @@ export default function Contact() {
                 )}
               </div>
 
-              {/* Social Section */}
-              {socialLinks.length > 0 && (
-                <div className={styles.socialSection}>
-                  <div className={styles.socialHeader}>
-                    <span className={styles.socialTitle}>Community Links</span>
-                  </div>
-                  <div className={styles.socialRow}>
-                    {socialLinks.map((link) => (
-                      <a
-                        key={link.label}
-                        href={link.href}
-                        target="_blank"
-                        rel="noreferrer"
-                        className={styles.socialIconBtn}
-                        aria-label={link.label}
-                        title={link.label}
-                      >
-                        {link.icon}
-                      </a>
-                    ))}
-                  </div>
+              {/* Redesigned Official Social Channels */}
+              <div className={styles.socialSection}>
+                <div className={styles.socialSectionHeader}>
+                  <span className={styles.socialKickerDot} />
+                  <h3 className={styles.socialSectionTitle}>Official Social Channels</h3>
                 </div>
-              )}
+                <p className={styles.socialSectionSubtitle}>
+                  Join our discussions, view event captures, and connect with fellow student developers.
+                </p>
+
+                <div className={styles.socialCardGrid}>
+                  {socialLinks.map((link) => (
+                    <a
+                      key={link.key}
+                      href={link.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      className={`${styles.socialCard} ${styles[`socialCard_${link.key}`] || ''}`}
+                      title={`Visit Coding Club SATI on ${link.label}`}
+                    >
+                      <div className={styles.socialCardLeft}>
+                        <div className={styles.socialCardIcon}>
+                          {link.icon}
+                        </div>
+                        <div className={styles.socialCardMeta}>
+                          <span className={styles.socialCardName}>{link.label}</span>
+                          <span className={styles.socialCardHandle}>{link.handle}</span>
+                        </div>
+                      </div>
+                      <div className={styles.socialCardAction} aria-hidden="true">
+                        <ArrowUpRight size={14} className={styles.socialCardArrow} />
+                      </div>
+                    </a>
+                  ))}
+                </div>
+              </div>
             </div>
 
             {/* Right Pane: Message Form */}
